@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -106,5 +107,23 @@ class MovieController extends AbstractController
         return $this->json($movie);
         
         //return new Response("Fiche demandée " . $idMovie);
+    }
+
+    /**
+     * @Route(
+     *      "/add",
+     *      name="Add",
+     *      methods={"GET"}
+     * )
+     */
+    public function addMovie() : Response
+    {
+        // Appel au formulaire MovieType
+        $formulaireAjoutFilm = $this->createForm(
+            MovieType::class
+        );
+
+        dd($formulaireAjoutFilm);
+
     }
 }
