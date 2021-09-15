@@ -37,6 +37,14 @@ class Movie
      */
     private $idDirector;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="synopsis", type="text", nullable=true)
+     */
+    private $synopsis;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +94,18 @@ class Movie
     public function setIdDirector(?Artist $idDirector): self
     {
         $this->idDirector = $idDirector;
+
+        return $this;
+    }
+
+    public function getSynopsis(): ?string
+    {
+        return $this->synopsis;
+    }
+
+    public function setSynopsis(?string $synopsis): self
+    {
+        $this->synopsis = $synopsis;
 
         return $this;
     }
