@@ -27,4 +27,21 @@ class MovieController extends AbstractController
             'controller_name' => 'MovieController',
         ]);
     }
+
+    /**
+     * Affichage de la fiche d'un film
+     * 
+     * > Paramètre dans l'url
+     * > Paramètre décimal
+     * 
+     * @Route(
+     *      "/{idMovie}",
+     *      name="Show",
+     *      requirements={"idMovie"="\d+"}
+     * )
+     */
+    public function showMovie(int $idMovie) : Response
+    {
+        return new Response("Fiche demandée " . $idMovie);
+    }
 }
