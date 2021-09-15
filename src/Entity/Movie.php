@@ -27,6 +27,11 @@ class Movie
      */
     private $poster;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $year;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Movie
     public function setPoster(?string $poster): self
     {
         $this->poster = $poster;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(?int $year): self
+    {
+        $this->year = $year;
 
         return $this;
     }
