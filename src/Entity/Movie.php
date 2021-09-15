@@ -32,6 +32,11 @@ class Movie
      */
     private $year;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="movies_director")
+     */
+    private $idDirector;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Movie
     public function setYear(?int $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getIdDirector(): ?Artist
+    {
+        return $this->idDirector;
+    }
+
+    public function setIdDirector(?Artist $idDirector): self
+    {
+        $this->idDirector = $idDirector;
 
         return $this;
     }
