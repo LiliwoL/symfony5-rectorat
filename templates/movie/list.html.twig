@@ -15,6 +15,8 @@
         {% for movie in movies %}
             <li>
                 {{ movie.id }} -- {{ movie.title }}
+                <br>
+                <img src="{{ movie.poster }}" />
             </li>
         {% endfor %}
     </ul>
