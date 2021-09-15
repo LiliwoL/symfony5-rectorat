@@ -1,5 +1,21 @@
-Vue de la liste des films
+{% extends 'base.html.twig' %}
 
-Afficher la variable:
+{# Surcharge du bloc title #}
+{% block title %}Liste des films{% endblock %}
 
-{{ cle }}
+
+{% block body %}
+
+    {# Affichage d'une valeur avec dump#}
+    {{ dump(movies) }}
+
+
+    {# Affichage en liste #}
+    <ul>
+        {% for movie in movies %}
+            <li>
+                {{ movie.id }} -- {{ movie.title }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

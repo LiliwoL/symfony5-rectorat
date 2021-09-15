@@ -23,8 +23,9 @@ class MovieController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('movie/index.html.twig', [
-            'controller_name' => 'MovieController',
+        return $this->render('movie/index.html.twig', 
+        [
+            'controller_name' => 'Rectorat',
         ]);
     }
 
@@ -38,11 +39,24 @@ class MovieController extends AbstractController
      */
     public function list() : Response
     {
+        // Tableau de données
+        $movies = [
+            [
+                'id' => 1,
+                'title' => 'Dune'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Dune2'
+            ],
+        ];
+
+
         // Préparation d'un renvoi d'une vue LISTE
         return $this->render(
             'movie/list.html.twig',
             [
-                'cle' => 'valeur'
+                'movies' => $movies
             ]
         );
     }
