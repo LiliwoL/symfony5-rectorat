@@ -27,6 +27,19 @@ class ContactController extends AbstractController
 
     /**
      * @Route(
+     *  "/test",
+     *  name="test2",
+     *  priority=2
+     * )
+     */
+    public function test2(): Response
+    {
+        return new Response("Coucou2");
+    }
+
+
+    /**
+     * @Route(
      *  "/test/{name}/{id}",
      *  name="test",
      * 
@@ -41,15 +54,4 @@ class ContactController extends AbstractController
         return new Response("Coucou " . $name . " " . $id);
     }
 
-    /**
-     * @Route(
-     *  "/test",
-     *  name="test2",
-     *  priority=2
-     * )
-     */
-    public function test2(): Response
-    {
-        return new Response("Coucou2");
-    }
 }
