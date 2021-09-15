@@ -4,6 +4,13 @@
 {% block title %}Liste des films{% endblock %}
 
 
+{% block stylesheets %}
+    {# Je veux une feuille de style spécifique pour cette vue #}
+    <!-- Feuille spécifique -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+
 {% block body %}
 
     {# Affichage d'une valeur avec dump#}
@@ -20,4 +27,5 @@
             </li>
         {% endfor %}
     </ul>
+
 {% endblock %}
