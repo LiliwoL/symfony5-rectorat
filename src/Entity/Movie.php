@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
+ * @ORM\Table(name="movie")
  */
 class Movie
 {
@@ -28,22 +29,19 @@ class Movie
     private $poster;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $synopsis;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $year;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="movies_director")
+     * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="moviesAsDirector")
      */
     private $idDirector;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="synopsis", type="text", nullable=true)
-     */
-    private $synopsis;
-
 
     public function getId(): ?int
     {
@@ -74,6 +72,18 @@ class Movie
         return $this;
     }
 
+    public function getSynopsis(): ?string
+    {
+        return $this->synopsis;
+    }
+
+    public function setSynopsis(?string $synopsis): self
+    {
+        $this->synopsis = $synopsis;
+
+        return $this;
+    }
+
     public function getYear(): ?int
     {
         return $this->year;
@@ -96,21 +106,5 @@ class Movie
         $this->idDirector = $idDirector;
 
         return $this;
-    }
-
-    public function getSynopsis(): ?string
-    {
-        return $this->synopsis;
-    }
-
-    public function setSynopsis(?string $synopsis): self
-    {
-        $this->synopsis = $synopsis;
-
-        return $this;
-    }
-
-    public function test(){
-        return 'test';
     }
 }

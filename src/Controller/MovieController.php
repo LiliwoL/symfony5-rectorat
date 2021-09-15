@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
-use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

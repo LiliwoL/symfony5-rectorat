@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ArtistRepository::class)
+ * @ORM\Table(name="artist")
  */
 class Artist
 {
@@ -32,11 +33,16 @@ class Artist
     /**
      * @ORM\OneToMany(targetEntity=Movie::class, mappedBy="idDirector")
      */
-    private $movies_director;
+    private $moviesAsDirector;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="artists")
+     */
+    private $country;
 
     public function __construct()
     {
-        $this->movies_director = new ArrayCollection();
+        $this->moviesAsDirector = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,29 +77,41 @@ class Artist
     /**
      * @return Collection|Movie[]
      */
-    public function getMoviesDirector(): Collection
+    public function getMoviesAsDirector(): Collection
     {
-        return $this->movies_director;
+        return $this->moviesAsDirector;
     }
 
-    public function addMoviesDirector(Movie $moviesDirector): self
+    public function addMoviesAsDirector(Movie $moviesAsDirector): self
     {
-        if (!$this->movies_director->contains($moviesDirector)) {
-            $this->movies_director[] = $moviesDirector;
-            $moviesDirector->setIdDirector($this);
+        if (!$this->moviesAsDirector->contains($moviesAsDirector)) {
+            $this->moviesAsDirector[] = $moviesAsDirector;
+            $moviesAsDirector->setIdDirector($this);
         }
 
         return $this;
     }
 
-    public function removeMoviesDirector(Movie $moviesDirector): self
+    public function removeMoviesAsDirector(Movie $moviesAsDirector): self
     {
-        if ($this->movies_director->removeElement($moviesDirector)) {
+        if ($this->moviesAsDirector->removeElement($moviesAsDirector)) {
             // set the owning side to null (unless already changed)
-            if ($moviesDirector->getIdDirector() === $this) {
-                $moviesDirector->setIdDirector(null);
+            if ($moviesAsDirector->getIdDirector() === $this) {
+                $moviesAsDirector->setIdDirector(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }
