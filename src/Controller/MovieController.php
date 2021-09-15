@@ -41,7 +41,9 @@ class MovieController extends AbstractController
         // Préparation d'un renvoi d'une vue LISTE
         return $this->render(
             'movie/list.html.twig',
-            []
+            [
+                'cle' => 'valeur'
+            ]
         );
     }
 
