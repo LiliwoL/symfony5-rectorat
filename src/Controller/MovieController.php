@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\MovieRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MovieController extends AbstractController
 {
+    private $repository;
+
+    public function __construct(MovieRepository $movieRepository)
+    {
+        // Chargement du movieRepository a la construction de ce controller
+        $this->repository = $movieRepository;
+    }
+
     /**
      * @Route(
      *  "_index",
@@ -25,13 +34,16 @@ class MovieController extends AbstractController
     public function index(): Response
     {
         return $this->render('movie/index.html.twig', 
-        [
-            'controller_name' => 'Rectorat',
-        ]);
+            [
+                'controller_name' => 'Rectorat',
+            ]
+        );
     }
 
     /**
      * Affichage de la liste des films
+     * 
+     * -> injection de la dépendance MovieRepository
      * 
      * @Route(
      *      "/list/{format}",
@@ -40,8 +52,8 @@ class MovieController extends AbstractController
      */
     public function list(string $format = 'html') : Response
     {
-        // Tableau de données
-        $movies = [
+        // Tableau de données fourni
+        /* $movies = [
             [
                 'id' => 1,
                 'title' => 'Dune',
@@ -52,7 +64,10 @@ class MovieController extends AbstractController
                 'title' => 'Dune2',
                 'poster' => 'https://s1.qwant.com/thumbr/0x380/3/c/cb51f543a7863dc374d37661c6f6db2aa09639b44cf5daf2bee95576454065/DUNE-1068x601.jpg?u=https%3A%2F%2Fwww.geekgeneration.fr%2Fwp-content%2Fuploads%2F2020%2F09%2FDUNE-1068x601.jpg&q=0&b=1&p=0&a=0'
             ],
-        ];
+        ]; */
+
+        // On va chercher la liste des films en BASE
+        $movies = $this->repository->findAll();
 
         // Préparation d'un renvoi d'une vue LISTE
         if ($format == 'json')
@@ -85,6 +100,11 @@ class MovieController extends AbstractController
      */
     public function showMovie(int $idMovie) : Response
     {
-        return new Response("Fiche demandée " . $idMovie);
+        // Cherche la fiche du film
+        $movie = $this->repository->find($idMovie);
+
+        return $this->json($movie);
+        
+        //return new Response("Fiche demandée " . $idMovie);
     }
 }
