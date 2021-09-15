@@ -39,7 +39,9 @@ class Movie
     private $year;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="moviesAsDirector")
+     * Fetch EAGER va permettre de charger directement l'objet lié
+     * 
+     * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="moviesAsDirector", fetch="EAGER")
      * @ORM\JoinColumn(name="id_director_id", referencedColumnName="id")
      */
     private $idDirector;

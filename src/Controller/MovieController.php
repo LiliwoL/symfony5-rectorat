@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Ici on déclare un "préfixe" de route
@@ -46,11 +49,11 @@ class MovieController extends AbstractController
      * -> injection de la dépendance MovieRepository
      * 
      * @Route(
-     *      "/list/{format}",
+     *      "/list/{format?}",
      *      name="List"
      * )
      */
-    public function list(string $format = 'html') : Response
+    public function list(?string $format) : Response
     {
         // Tableau de données fourni
         /* $movies = [
@@ -70,16 +73,22 @@ class MovieController extends AbstractController
         $movies = $this->repository->findAll();
 
         // Préparation d'un renvoi d'une vue LISTE
-        if ($format == 'json')
+        if ($format === 'json')
         {
+
+            // Json demandé
             $output = $this->json($movies);
+
         }else{
+
+            // Renvoi en HTML
             $output = $this->render(
                 'movie/list.html.twig',
                 [
                     'movies' => $movies
                 ]
             );
+
         }
 
         // On pourrait faire un renvoi en json
@@ -93,19 +102,42 @@ class MovieController extends AbstractController
      * > Paramètre décimal
      * 
      * @Route(
-     *      "/{idMovie}",
+     *      "/{idMovie}/{format?}",
      *      name="Show",
      *      requirements={"idMovie"="\d+"}
      * )
      */
-    public function showMovie(int $idMovie) : Response
+    public function showMovie(?string $format, int $idMovie, SerializerInterface $serializerInterface) : Response
     {
         // Cherche la fiche du film
         $movie = $this->repository->find($idMovie);
 
-        return $this->json($movie);
-        
-        //return new Response("Fiche demandée " . $idMovie);
+
+        // Préparation d'un renvoi d'une vue LISTE
+        if ($format === 'json')
+        {
+
+             // Si on laisse ceci, on a un souci de référence circulaire
+            //return $this->json($movie);
+
+            // Il faut alors gérer un contexte de sérialisation
+            $output = $this->json($movie,200,[],['circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }]);
+
+        }else{
+
+            // Renvoi en HTML
+            $output = $this->render(
+                'movie/show.html.twig',
+                [
+                    'movie' => $movie
+                ]
+            );
+
+        }
+
+       return $output;
     }
 
     /**

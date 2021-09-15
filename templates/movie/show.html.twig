@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{# Surcharge du bloc title #}
+{% block title %}Liste des films{% endblock %}
+
+
+{% block stylesheets %}
+    {# Je veux une feuille de style spécifique pour cette vue #}
+    <!-- Feuille spécifique -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+    {# Inclusion de header #}
+    {% include 'header.html.twig' with {'valeur': 'Fiche d\'un film'} %}
+
+    {# Affichage d'une valeur avec dump#}
+    {#{ dump(movies) }#}
+
+    <div class="row justify-content-md-center">
+        <div class="col-3">
+            <h1>{{ movie.title }}</h1>
+            <img src="{{ movie.poster }}" class="img-thumbnail">
+        </div>
+
+        <div class="col-4">
+            <h2>Synopsis</h2>
+            <div>
+                {{ movie.synopsis }}
+            </div>
+
+            <hr>
+
+            <h2>Réalisateur.rice:</h2>
+            {#{ dump(movie.idDirector) }#}
+            {{ movie.idDirector.name }} {{ movie.idDirector.surname }} {{ movie.idDirector.yearOfBirth }}
+        </div>
+    </div>
+
+{% endblock %}
