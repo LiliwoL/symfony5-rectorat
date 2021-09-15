@@ -24,9 +24,13 @@
     <ul>
         {% for movie in movies %}
             <li>
-                {{ movie.id }} -- {{ movie.title }}
+                {{ movie.id }} -- {{ movie.title|upper|replace({'U': 'A'}) }}                
                 <br>
                 <img src="{{ movie.poster }}" />
+                <br>
+                <a href="{{ path('Movie_Show', { 'idMovie': movie.id }) }}" title="{{ movie.title }}">Voir la fiche du film</a>
+                <br>
+                <a href="{{ url('Movie_Show', { 'idMovie': movie.id }) }}" title="{{ movie.title }}">Voir la fiche du film</a>
             </li>
         {% endfor %}
     </ul>
