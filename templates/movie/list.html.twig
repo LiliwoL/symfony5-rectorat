@@ -17,14 +17,14 @@
     {% include 'header.html.twig' with {'valeur': 'Liste des films'} %}
 
     {# Affichage d'une valeur avec dump#}
-    {{ dump(movies) }}
+    {#{ dump(movies) }#}
 
 
     {# Affichage en liste #}
     <ul>
         {% for movie in movies %}
             <li>
-                {{ movie.id }} -- {{ movie.title|upper|replace({'U': 'A'}) }}                
+                {{ movie.id }} -- {{ movie.title|upper }}
                 <br>
                 <img src="{{ movie.poster }}" />
                 <br>

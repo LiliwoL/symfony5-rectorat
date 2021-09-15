@@ -37,8 +37,14 @@ class Artist
 
     /**
      * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="artists")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
     private $country;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $yearOfBirth;
 
     public function __construct()
     {
@@ -112,6 +118,18 @@ class Artist
     public function setCountry(?Country $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getYearOfBirth(): ?int
+    {
+        return $this->yearOfBirth;
+    }
+
+    public function setYearOfBirth(?int $yearOfBirth): self
+    {
+        $this->yearOfBirth = $yearOfBirth;
 
         return $this;
     }

@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Artist;
 use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +18,33 @@ class MovieType extends AbstractType
             ->add('poster')
             ->add('year')
             ->add('synopsis')
-            ->add('idDirector')
+            ->add('idDirector',
+                EntityType::class,
+                [
+                    // https://symfony.com/doc/current/reference/forms/types/entity.html
+
+                    'label' => 'Artiste', 
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'class' => Artist::class,
+
+                    'choice_label' => 'name',
+                    //* On peut appeler une méthode d'affichage spécifique
+                    /*
+                    'choice_label' => function ($artist){
+                        return $artist->__toString();
+                    },*/
+
+                    //'multiple' => true,
+
+                    /* On ne veut afficher que certains acteurs */
+                    //'query_builder' => https://symfony.com/doc/current/reference/forms/types/entity.html#ref-form-entity-query-builder
+                    /*'query_builder' => function (ArtistRepository $artistRepository) {
+                        return $artistRepository->findAllWithPhoto();
+                    }*/
+                ]
+            )
         ;
     }
 

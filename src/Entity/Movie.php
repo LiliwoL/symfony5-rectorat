@@ -40,6 +40,7 @@ class Movie
 
     /**
      * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="moviesAsDirector")
+     * @ORM\JoinColumn(name="id_director_id", referencedColumnName="id")
      */
     private $idDirector;
 
