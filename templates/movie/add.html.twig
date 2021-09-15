@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un film{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'un film</h1>
+
+    <div class="row align-items-center">
+        <div class="col">
+            Formulaire (en une seule ligne):            
+            {{ form(formulaireAjoutFilm) }}
+        </div>
+    </div>
+    <br>
+    <div class="row align-items-center">
+        <div class="col">
+            <a href="{{ path('Movie_List') }}" class="btn btn-success">Retour à la liste des films</a>
+        </div>
+    </div>
+{% endblock %}

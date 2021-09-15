@@ -123,7 +123,11 @@ class MovieController extends AbstractController
             MovieType::class
         );
 
-        dd($formulaireAjoutFilm);
-
+        return $this->render(
+            'movie/add.html.twig',
+            [
+                'formulaireAjoutFilm' => $formulaireAjoutFilm->createView()
+            ]
+        );
     }
 }
