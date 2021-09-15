@@ -109,4 +109,8 @@ class Movie
 
         return $this;
     }
+
+    public function test(){
+        return 'test';
+    }
 }
