@@ -29,6 +29,23 @@ class MovieController extends AbstractController
     }
 
     /**
+     * Affichage de la liste des films
+     * 
+     * @Route(
+     *      "/list",
+     *      name="List"
+     * )
+     */
+    public function list() : Response
+    {
+        // Préparation d'un renvoi d'une vue LISTE
+        return $this->render(
+            'movie/list.html.twig',
+            []
+        );
+    }
+
+    /**
      * Affichage de la fiche d'un film
      * 
      * > Paramètre dans l'url
