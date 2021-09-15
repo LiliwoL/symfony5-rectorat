@@ -34,11 +34,11 @@ class MovieController extends AbstractController
      * Affichage de la liste des films
      * 
      * @Route(
-     *      "/list",
+     *      "/list/{format}",
      *      name="List"
      * )
      */
-    public function list() : Response
+    public function list(string $format = 'html') : Response
     {
         // Tableau de données
         $movies = [
@@ -55,12 +55,20 @@ class MovieController extends AbstractController
         ];
 
         // Préparation d'un renvoi d'une vue LISTE
-        return $this->render(
-            'movie/list.html.twig',
-            [
-                'movies' => $movies
-            ]
-        );
+        if ($format == 'json')
+        {
+            $output = $this->json($movies);
+        }else{
+            $output = $this->render(
+                'movie/list.html.twig',
+                [
+                    'movies' => $movies
+                ]
+            );
+        }
+
+        // On pourrait faire un renvoi en json
+        return $output;
     }
 
     /**
