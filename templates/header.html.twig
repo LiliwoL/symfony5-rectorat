@@ -23,5 +23,5 @@
 
 {# Affichage conditionnel en cas de valeur UPDATE définie ET à true #}
 {% if (update is defined and update == true) %}
-    <a href="{{ path('Movie_Update', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modificer ce film</a>
+    <a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
 {% endif %}

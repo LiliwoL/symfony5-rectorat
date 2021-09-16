@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Artist;
 use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Ici on déclare un "préfixe" de route
@@ -308,9 +310,13 @@ class MovieController extends AbstractController
      *      name="Edit",
      *      methods={"GET", "POST"}
      * )
-     */
+     * 
+     * Utilisation du ParamConverter
+     * **ParamConverter("Artist", options={"id" = "id"})**
+     */    
     public function editMovie(Movie $movie, Request $request): Response
     {
+
         // Création du formulaire de Movie
         $formulaire = $this->createForm(
             MovieType::class,
@@ -320,8 +326,8 @@ class MovieController extends AbstractController
         // Ce formulaire gère la requête en cours
         $formulaire->handleRequest($request);
 
-        // Test du formulaire
-        if ( $formulaire->isValid() && $formulaire->isSubmitted()){
+        // Test du formulaire (test de la soumission avant la validation)
+        if ( $formulaire->isSubmitted() && $formulaire->isValid() ){
             // Update en base
         }
 
@@ -329,7 +335,6 @@ class MovieController extends AbstractController
         return $this->render(
             'movie/edit.html.twig',
             [
-                'movie' => $movie,
                 'formulaire' => $formulaire->createView()
             ]
         );
