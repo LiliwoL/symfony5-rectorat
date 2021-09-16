@@ -7,6 +7,8 @@ use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -49,11 +51,9 @@ class MovieType extends AbstractType
             )
             ->add(
                 'year',
-                DateType::class,
+                IntegerType::class,
                 [
                     'label' => 'Année de sortie',
-                    'widget' => 'single_text',
-                    'input_format' => 'Y',
                     'attr' => [
                         'class' => 'form-control'
                     ]
@@ -75,13 +75,12 @@ class MovieType extends AbstractType
                 'submit',
                 SubmitType::class,
                 [
-                    'label' => 'Enregistrer',
+                    'label' => 'Ajouter',
                     'attr' => [
                         'class' => 'btn btn-primary'
                     ]
                 ],
-            )          
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

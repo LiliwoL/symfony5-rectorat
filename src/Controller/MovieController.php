@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -165,5 +168,48 @@ class MovieController extends AbstractController
                 'formulaireAjoutFilm' => $formulaireAjoutFilm->createView()
             ]
         );
+    }
+
+    /**
+     * On aurait pu tout faire dans la même action de controller
+     * 
+     * @Route(
+     *      "/add",
+     *      name="AddPOST",
+     *      methods={"POST"}
+     * )
+     */
+    public function addMoviePOST(Request $request, EntityManagerInterface $em) : Response
+    {
+        // Instance vide de MOVIE
+        $movie = new Movie();
+
+        // Appel au formulaire MovieType
+        $formulaireAjoutFilm = $this->createForm(
+            MovieType::class,
+            $movie
+        );
+
+        // On demande au formulaire de gérer la requête HTTP en cours
+        $formulaireAjoutFilm->handleRequest($request);
+
+        // Le formulaire a t'il été soumis et est il valide?
+        if ( $formulaireAjoutFilm->isSubmitted() && $formulaireAjoutFilm->isValid())
+        {
+            // Le formulaire est OK, on s'occupe des données
+            $movie = $formulaireAjoutFilm->getData();
+
+            // On a une instance de Movie, on peut la mettre en base de données
+            // dd($movie);
+            // Cette instance n'a pas encore d'id!
+
+            // Appel de l'entity manager pour une persistance en base
+            $em->persist($movie);
+
+            // On aurait pu avoir plusieurs chose sà mettre en base
+            $em->flush();            
+        }
+
+        return new Response("ADD MOVIE");
     }
 }
