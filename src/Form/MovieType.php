@@ -13,38 +13,17 @@ class MovieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // Le builder attend qu'on lui ajoute les champs à afficher dans le formulaire
+
+        // Les champs disponibles de base sont disponibles ici:
+        // https://symfony.com/doc/current/reference/forms/types.html
         $builder
+            // Le champ titre peut être configuré en TextField
             ->add('title')
             ->add('poster')
             ->add('year')
             ->add('synopsis')
-            ->add('idDirector',
-                EntityType::class,
-                [
-                    // https://symfony.com/doc/current/reference/forms/types/entity.html
-
-                    'label' => 'Artiste', 
-                    'attr' => [
-                        'class' => 'form-control'
-                    ],
-                    'class' => Artist::class,
-
-                    'choice_label' => 'name',
-                    //* On peut appeler une méthode d'affichage spécifique
-                    /*
-                    'choice_label' => function ($artist){
-                        return $artist->__toString();
-                    },*/
-
-                    //'multiple' => true,
-
-                    /* On ne veut afficher que certains acteurs */
-                    //'query_builder' => https://symfony.com/doc/current/reference/forms/types/entity.html#ref-form-entity-query-builder
-                    /*'query_builder' => function (ArtistRepository $artistRepository) {
-                        return $artistRepository->findAllWithPhoto();
-                    }*/
-                ]
-            )
+            
         ;
     }
 
