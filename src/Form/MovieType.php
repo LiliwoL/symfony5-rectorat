@@ -63,12 +63,28 @@ class MovieType extends AbstractType
                 'synopsis',
                 TextareaType::class,
                 [
-                    'label' => 'Synopsis', 
+                    'label' => 'Synopsis',
                     'attr' => [
                         'placeholder' => 'Il était une fois...',
                         'class' => 'form-control'
                     ],
                     'required' => false
+                ]
+            )
+            // Champs entité lié
+            ->add(
+                'id_director',
+                EntityType::class,
+                [
+                    'label' => 'Réalisateur.rice',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    //'class' => Artist::class,
+                    'class' => "App\Entity\Artist",
+
+                    // Label utilisé
+                    'choice_label' => 'name'
                 ]
             )
             ->add(

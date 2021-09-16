@@ -232,12 +232,16 @@ class MovieController extends AbstractController
                     ]
                 );
         }else{
+
+            // ********* Confirmation
             // Le formulaire n'est pas soumis ou pas valide
             // Ajout d'un message de confirmation
             $this->addFlash(
                 'error',
                 'Il y a eu un souci'
             );
+
+            // ********* Redirection
             return $this->redirectToRoute(
                 "Movie_Add"
             );
