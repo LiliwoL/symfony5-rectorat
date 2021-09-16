@@ -77,7 +77,12 @@ class MovieController extends AbstractController
         {
 
             // Json demandé
-            $output = $this->json($movies);
+            $output = $this->json(
+                $movies,
+                200,
+                [],
+                [AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object){return $object->getId();}]
+            );
 
         }else{
 
