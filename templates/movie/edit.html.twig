@@ -10,8 +10,35 @@
 
     <div class="row align-items-center">
         <div class="col">
-            Formulaire (en une seule ligne):            
-            {{ form(formulaire) }}
+            {#
+                Formulaire (en une seule ligne):            
+                {{ form(formulaire) }}
+            #}
+
+            {# Découpage de l'affichage du formulaire #}
+            {{ form_start(formulaire) }}
+                <div class="my-custom-class-for-errors">
+                    {{ form_errors(formulaire) }}
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(formulaire.title, 'Titre depuis la vue') }}
+                        {{ form_widget(formulaire.title, {
+                            'attr': {
+                                'class': 'form-group',
+                                'placeholder': 'Titre...'
+                        }})}}
+                    </div>
+
+                    <div class="col" id="some-custom-id">
+                        {{ form_row(formulaire.poster) }}
+                    </div>
+                </div>
+
+
+            {{ form_end(formulaire) }}
+
         </div>
     </div>
     <br>

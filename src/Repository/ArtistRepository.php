@@ -19,6 +19,18 @@ class ArtistRepository extends ServiceEntityRepository
         parent::__construct($registry, Artist::class);
     }
 
+
+    // Création d'une requête utilisée dans un champ EntityField
+    public function findArtistBornAfter1980()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.yearOfBirth IS NOT NULL')
+            ->andWhere('a.yearOfBirth > :year')
+            ->setParameter('year', 1980)
+            
+            ->orderBy('a.name', 'ASC');
+    }
+
     // /**
     //  * @return Artist[] Returns an array of Artist objects
     //  */

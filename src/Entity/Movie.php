@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MovieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -20,6 +21,11 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\Length(     
+     *  max = "50",
+     *  maxMessage = "50 maxi"
+     * )
      */
     private $title;
 

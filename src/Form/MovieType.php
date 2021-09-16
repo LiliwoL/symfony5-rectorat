@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Artist;
 use App\Entity\Movie;
+use App\Repository\ArtistRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -15,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MovieType extends AbstractType
 {
@@ -34,6 +37,15 @@ class MovieType extends AbstractType
                     'attr'  => [
                         'placeholder'   => 'Les Goonies, Evita...',
                         'class'         => 'form-control'
+                    ],
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(
+                            [
+                                'min' => 2,
+                                'minMessage' => 'Le titre doit faire plus de 2 caractères!'
+                            ]
+                        )
                     ]
                 ]
             )
@@ -89,14 +101,17 @@ class MovieType extends AbstractType
                     'choice_label' => function ($artist){
                         // Utilisation de __toString()
                         return $artist;
-                    }                    
+                    },
+                    'query_builder' => function (ArtistRepository $artistRepository){
+                        return $artistRepository->findArtistBornAfter1980();
+                    }
                 ]
             )
             ->add(
                 'submit',
                 SubmitType::class,
                 [
-                    'label' => 'Ajouter',
+                    'label' => 'Ajouter / Modifier',
                     'attr' => [
                         'class' => 'btn btn-primary'
                     ]

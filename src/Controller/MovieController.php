@@ -235,6 +235,8 @@ class MovieController extends AbstractController
                 );
         }else{
 
+            dd($formulaireAjoutFilm->isValid());
+
             // ********* Confirmation
             // Le formulaire n'est pas soumis ou pas valide
             // Ajout d'un message de confirmation
