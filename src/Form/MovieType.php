@@ -44,7 +44,18 @@ class MovieType extends AbstractType
                 ]
 
             )
-            ->add('year')
+            ->add(
+                'year',
+                DateType::class,
+                [
+                    'label' => 'Année de sortie',
+                    'widget' => 'single_text',
+                    'input_format' => 'Y',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
+                ]
+            )
             ->add('synopsis')
             
         ;
