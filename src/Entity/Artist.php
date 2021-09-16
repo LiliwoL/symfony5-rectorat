@@ -133,4 +133,10 @@ class Artist
 
         return $this;
     }
+
+    // **** Fonction d'affichage    
+    public function __toString()
+    {
+        return $this->getSurname() . " " . $this->getName() . " " . $this->getYearOfBirth();
+    }
 }

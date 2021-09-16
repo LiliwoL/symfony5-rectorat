@@ -83,8 +83,13 @@ class MovieType extends AbstractType
                     //'class' => Artist::class,
                     'class' => "App\Entity\Artist",
 
-                    // Label utilisé
-                    'choice_label' => 'name'
+                    // Champ de la classe liée qui va être affiché
+                    //'choice_label' => 'name',
+                    // On peut définir une fonction anonyme pour l'affichage
+                    'choice_label' => function ($artist){
+                        // Utilisation de __toString()
+                        return $artist;
+                    }                    
                 ]
             )
             ->add(
