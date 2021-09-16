@@ -19,23 +19,31 @@
     {# Affichage d'une valeur avec dump#}
     {#{ dump(movies) }#}
 
+    <div class="row row-cols-1 row-cols-md-3 g-4">
 
     {# Affichage en liste #}
-    <ul>
         {% for movie in movies %}
-            <li>
-                {{ movie.id }} -- {{ movie.title|upper }}
-                <br>
-                <img src="{{ movie.poster }}" />
-                <br>
+            <div class="col">
+                <div class="card h-100">
+
+                    {# Echappement html pour l'attribut alt #}
+                    <!--<img src="" class="card-img-top" alt="{{ movie.title|e }}">-->
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                        <p class="card-text">
+                            {{ movie.synopsis }}
+                        </p>
+                    </div>
+                 </div>
                 
                 <a href="{{ path('Movie_Show', { 'idMovie': movie.id }) }}" title="{{ movie.title|e }}">Voir la fiche du film</a>
                 {# La fonction url() va généréer une URL absolue #}
                 {# 
                     <a href="{{ url('Movie_Show', { 'idMovie': movie.id }) }}" title="{{ movie.title|e }}">Voir la fiche du film</a>
                 #}
-            </li>
+             </div>
         {% endfor %}
-    </ul>
+     </div>
 
 {% endblock %}
