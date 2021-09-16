@@ -35,7 +35,9 @@
 
             <h2>Réalisateur.rice:</h2>
             {#{ dump(movie.idDirector) }#}
-            {{ movie.idDirector.name }} {{ movie.idDirector.surname }} {{ movie.idDirector.yearOfBirth }}
+            {% if (movie.idDirector) %}
+                {{ movie.idDirector.name }} {{ movie.idDirector.surname }} {{ movie.idDirector.yearOfBirth }}
+            {% endif %}
         </div>
     </div>
 

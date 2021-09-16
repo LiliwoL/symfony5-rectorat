@@ -201,15 +201,36 @@ class MovieController extends AbstractController
             // Le formulaire est OK, on s'occupe des données
             $movie = $formulaireAjoutFilm->getData();
 
-            // On a une instance de Movie, on peut la mettre en base de données
-            // dd($movie);
-            // Cette instance n'a pas encore d'id!
+            // ********* Ecriture en base
 
-            // Appel de l'entity manager pour une persistance en base
-            $em->persist($movie);
+                // On a une instance de Movie, on peut la mettre en base de données
+                // dd($movie);
+                // Cette instance n'a pas encore d'id!
 
-            // On aurait pu avoir plusieurs choses à mettre en base
-            $em->flush();            
+                // Appel de l'entity manager pour une persistance en base
+                $em->persist($movie);
+
+                // On aurait pu avoir plusieurs choses à mettre en base
+                $em->flush();
+            
+
+            // ********* Confirmation
+                // Ajout d'un message de confirmation
+                $this->addFlash(
+                    'success',
+                    'La fiche du film ' . $movie->getTitle() . " a bien été ajoutée!"
+                );
+
+
+
+            // ********* Redirection
+                // Inséré en base, donc on a l'id
+                return $this->redirectToRoute(
+                    "Movie_Show",
+                    [
+                        'idMovie' => $movie->getId()
+                    ]
+                );
         }
 
         return new Response("ADD MOVIE");
