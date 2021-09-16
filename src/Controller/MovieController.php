@@ -190,6 +190,8 @@ class MovieController extends AbstractController
             $movie
         );
 
+        $em = $this->getDoctrine()->getManager();
+
         // On demande au formulaire de gérer la requête HTTP en cours
         $formulaireAjoutFilm->handleRequest($request);
 
@@ -206,7 +208,7 @@ class MovieController extends AbstractController
             // Appel de l'entity manager pour une persistance en base
             $em->persist($movie);
 
-            // On aurait pu avoir plusieurs chose sà mettre en base
+            // On aurait pu avoir plusieurs choses à mettre en base
             $em->flush();            
         }
 
