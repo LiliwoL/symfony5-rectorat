@@ -24,7 +24,6 @@ class ArtistRepository extends ServiceEntityRepository
     public function findArtistBornAfter1980()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.yearOfBirth IS NOT NULL')
             ->andWhere('a.yearOfBirth > :year')
             ->setParameter('year', 1980)
             
