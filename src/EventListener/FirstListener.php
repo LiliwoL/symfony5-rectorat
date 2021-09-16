@@ -40,7 +40,7 @@
         {
             // ...
 
-            $this->logger->info("Evenement Kernel Request");
+            $this->logger->info("❤❤❤ Evenement Kernel Request ❤❤❤ ");
             $this->logger->debug( "Type: " . $event->getRequestType() );
         }
 
@@ -49,7 +49,7 @@
         {
             // ...
 
-            $this->logger->info("Evenement Kernel Controller");
+            $this->logger->info("❤❤❤ Evenement Kernel Controller ❤❤❤ ");
             //$this->logger->debug($event );
         }
     }

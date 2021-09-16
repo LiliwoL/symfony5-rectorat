@@ -26,13 +26,19 @@
             <div class="col">
                 <div class="card h-100">
 
+                    {# En cas de poster absent, on place une fausse image #}
+                    {% if (movie.poster == 'NULL') or (movie.poster == 'http://NULL') %}
+                        {% set poster = 'https://dummyimage.com/150x200/000/fff' %}
+                    {% else %}
+                        {% set poster = movie.poster %}
+                    {% endif %}
                     {# Echappement html pour l'attribut alt #}
-                    <img src="{{ movie.poster }}" class="card-img-top" alt="{{ movie.title|e }}">
+                    <img src="{{ poster }}" class="card-img-top" alt="{{ movie.title|e }}">
 
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.title }} - {{ movie.year }}</h5>
                         <p class="card-text">
-                            {{ movie.synopsis }}
+                            {{ movie.synopsis|slice(0, 50) }}
                         </p>
                     </div>
                  </div>

@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Artist;
 use App\Entity\Movie;
+use App\Event\MovieCreatedEvent;
+use App\Event\MovieViewedEvent;
+use App\Event\MovieViewEvent;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as EventDispatcherEventDispatcherInterface;
 
 /**
  * Ici on déclare un "préfixe" de route
@@ -117,11 +122,18 @@ class MovieController extends AbstractController
      *      requirements={"idMovie"="\d+"}
      * )
      */
-    public function showMovie(?string $format, int $idMovie, SerializerInterface $serializerInterface) : Response
+    public function showMovie(?string $format, int $idMovie, SerializerInterface $serializerInterface, EventDispatcherInterface $dispatcher) : Response
     {
         // Cherche la fiche du film
         $movie = $this->repository->find($idMovie);
 
+        // ******** Dispatch de l'événement
+                // Création de notre événement personnalisé 
+                // en lui affectant le $movie qui vient d'être créé
+                $eventMovieViewed = new MovieViewedEvent($movie);
+
+                // Dispatch de l'événement movie.created
+                $dispatcher->dispatch($eventMovieViewed, MovieViewedEvent::NAME);
 
         // Préparation d'un renvoi d'une vue LISTE
         if ($format === 'json')
@@ -181,7 +193,7 @@ class MovieController extends AbstractController
      *      methods={"POST"}
      * )
      */
-    public function addMoviePOST(Request $request, EntityManagerInterface $em) : Response
+    public function addMoviePOST(Request $request, EntityManagerInterface $em, EventDispatcherInterface $dispatcher) : Response
     {
         // Instance vide de MOVIE
         $movie = new Movie();
@@ -222,6 +234,14 @@ class MovieController extends AbstractController
                     'success',
                     'La fiche du film ' . $movie->getTitle() . " a bien été ajoutée!"
                 );
+
+            // ******** Dispatch de l'événement
+                // Création de notre événement personnalisé 
+                // en lui affectant le $movie qui vient d'être créé
+                $eventMovieCreated = new MovieCreatedEvent($movie);
+
+                // Dispatch de l'événement movie.created
+                $dispatcher->dispatch($eventMovieCreated, MovieCreatedEvent::NAME);
 
 
 

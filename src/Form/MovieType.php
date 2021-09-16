@@ -102,10 +102,15 @@ class MovieType extends AbstractType
                         // Utilisation de __toString()
                         return $artist;
                     },
+
                     // Lien vers la doc https://symfony.com/doc/current/reference/forms/types/entity.html#query-builder
-                    'query_builder' => function (ArtistRepository $artistRepository){
-                        return $artistRepository->findArtistBornAfter1980();
-                    }
+                    
+                    // Les query Builders permettent de faire appel à une requête déjà préparée dans le repository
+                    /*
+                        'query_builder' => function (ArtistRepository $artistRepository){
+                            return $artistRepository->findArtistBornAfter1980();
+                        }
+                    */
                 ]
             )
             ->add(
