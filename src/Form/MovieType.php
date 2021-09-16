@@ -7,6 +7,7 @@ use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,11 +29,21 @@ class MovieType extends AbstractType
                     'attr'  => [
                         'placeholder'   => 'Les Goonies, Evita...',
                         'class'         => 'form-control'
-                    ],
-                    'required' => true
+                    ]
                 ]
             )
-            ->add('poster')
+            ->add(
+                'poster',
+                UrlType::class,
+                [
+                    'label' => 'URL de l\'affiche du film',
+                    'attr' => [
+                        'placeholder' => 'http://...',
+                        'class' => 'form-control'
+                    ],                    
+                ]
+
+            )
             ->add('year')
             ->add('synopsis')
             
