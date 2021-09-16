@@ -19,7 +19,19 @@
         {% endblock %}
     </head>
     <body>
-        <div class="container-fluid"> 
+        <div class="container-fluid">
+
+            {% for messageSuccess in app.flashes('success') %}
+                <div class="alert alert-success" role="alert">
+                    {{ messageSuccess }}
+                </div>
+            {% endfor %}
+            {% for messageError in app.flashes('error') %}
+                <div class="alert alert-danger" role="alert">
+                    {{ messageError }}
+                </div>
+            {% endfor %}
+
             {% block body %}{% endblock %}
         </div>
     </body>

@@ -231,8 +231,17 @@ class MovieController extends AbstractController
                         'idMovie' => $movie->getId()
                     ]
                 );
-        }
+        }else{
+            // Le formulaire n'est pas soumis ou pas valide
+            // Ajout d'un message de confirmation
+            $this->addFlash(
+                'error',
+                'Il y a eu un souci'
+            );
+            return $this->redirectToRoute(
+                "Movie_Add"
+            );
 
-        return new Response("ADD MOVIE");
+        }
     }
 }
