@@ -248,4 +248,56 @@ class MovieController extends AbstractController
 
         }
     }
+
+    /**
+     * @Route(
+     *      "/delete/{id}",
+     *      name="Delete",
+     *      methods={ "POST" }
+     * )
+     */
+    public function deleteMovie(Movie $movie, EntityManagerInterface $em, Request $request) : Response
+    {   
+        // La conversion de paramètre a automatiquement chargé l'instance Movie
+
+        // On  peut la tester
+        if ($movie)
+        {
+             // Vérification du CSRF
+            if ($this->isCsrfTokenValid('delete'. $movie->getId(), $request->request->get('_token')))
+            {
+
+                // Suppression
+                $em->remove($movie);
+                $em->flush();
+
+                // ************* Confirmation
+                    // Ajout d'un message de confirmation
+                    $this->addFlash(
+                        'success',
+                        'Le film a bien été supprimé'
+                    );
+            }else{
+                // ************* Confirmation
+                // Ajout d'un message de confirmation
+                $this->addFlash(
+                    'error',
+                    'Erreur de CSRF'
+                ); 
+            }
+            
+
+        
+        }else{
+            // Pas de Movie, donc erreur
+             // ************* Confirmation
+                // Ajout d'un message de confirmation
+                $this->addFlash(
+                    'error',
+                    'Erreur de suppression'
+                );            
+        }
+
+        return $this->redirectToRoute('Movie_List');
+    }
 }

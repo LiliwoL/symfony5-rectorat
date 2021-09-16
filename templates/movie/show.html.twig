@@ -14,7 +14,10 @@
 {% block body %}
 
     {# Inclusion de header #}
-    {% include 'header.html.twig' with {'valeur': 'Fiche d\'un film'} %}
+    {% include 'header.html.twig' with {
+        'valeur': 'Fiche d\'un film',
+        'delete': true} 
+    %}
 
     {# Affichage d'une valeur avec dump#}
     {#{ dump(movies) }#}

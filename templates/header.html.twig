@@ -4,3 +4,16 @@
 
 <a href="{{ path('Movie_Add') }}" title="ajouter un film" class="btn btn-primary">Ajouter un film</a>
 <a href="{{ path('Movie_List')}}" title="Liste des films" class="btn btn-primary">Liste des films</a>
+
+{# Affichage conditionnel en cas de valeur delete à true #}
+{% if (delete is defined and delete == true) %}
+    <form 
+        method="post" 
+        action="{{ path('Movie_Delete', {'id': movie.id}) }}"
+        onsubmit="return confirm('Êtes vous sûr.e de vouloir supprimer ce film?');">
+
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movie.id) }}">
+        <button class="btn btn-danger">Supprimer</button>
+
+    </form>
+{% endif %}
