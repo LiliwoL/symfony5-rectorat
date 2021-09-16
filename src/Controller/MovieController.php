@@ -300,4 +300,38 @@ class MovieController extends AbstractController
 
         return $this->redirectToRoute('Movie_List');
     }
+
+
+    /**
+     * @Route(
+     *      "/edit/{id}",
+     *      name="Edit",
+     *      methods={"GET", "POST"}
+     * )
+     */
+    public function editMovie(Movie $movie, Request $request): Response
+    {
+        // Création du formulaire de Movie
+        $formulaire = $this->createForm(
+            MovieType::class,
+            $movie
+        );
+
+        // Ce formulaire gère la requête en cours
+        $formulaire->handleRequest($request);
+
+        // Test du formulaire
+        if ( $formulaire->isValid() && $formulaire->isSubmitted()){
+            // Update en base
+        }
+
+        //Affichage du formulaire avec les données du Movie en cours
+        return $this->render(
+            'movie/edit.html.twig',
+            [
+                'movie' => $movie,
+                'formulaire' => $formulaire->createView()
+            ]
+        );
+    }
 }

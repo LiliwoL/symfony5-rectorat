@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'un film{% endblock %}
+{% block title %}Edition d'un film{% endblock %}
 
 {% block body %}
     {# Inclusion de header #}
     {% include 'header.html.twig' with {
-        'valeur': 'Ajout d\'un film'} 
+        'valeur': 'Edition d\'un film'} 
     %}
 
     <div class="row align-items-center">
         <div class="col">
             Formulaire (en une seule ligne):            
-            {{ form(formulaireAjoutFilm) }}
+            {{ form(formulaire) }}
         </div>
     </div>
     <br>
