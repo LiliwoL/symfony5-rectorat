@@ -314,9 +314,8 @@ class MovieController extends AbstractController
      * Utilisation du ParamConverter
      * **ParamConverter("Artist", options={"id" = "id"})**
      */    
-    public function editMovie(Movie $movie, Request $request): Response
+    public function editMovie(Movie $movie, Request $request, EntityManagerInterface $em): Response
     {
-
         // Création du formulaire de Movie
         $formulaire = $this->createForm(
             MovieType::class,
@@ -327,8 +326,22 @@ class MovieController extends AbstractController
         $formulaire->handleRequest($request);
 
         // Test du formulaire (test de la soumission avant la validation)
-        if ( $formulaire->isSubmitted() && $formulaire->isValid() ){
+        if ( $formulaire->isSubmitted() && $formulaire->isValid() )
+        {
             // Update en base
+            //$em->persist($movie); 
+            // Persits non obligatoire dans le cadre d'un update
+
+            $em->flush();
+
+            // ************* Confirmation
+                // Ajout d'un message de confirmation
+                $this->addFlash(
+                    'success',
+                    'Le film ' . $movie->getTitle() . ' a bien été mis à jour'
+                );
+
+            return $this->redirectToRoute('Movie_List');
         }
 
         //Affichage du formulaire avec les données du Movie en cours
