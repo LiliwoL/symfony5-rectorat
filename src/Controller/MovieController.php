@@ -19,7 +19,6 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as EventDispatcherEventDispatcherInterface;
 
 /**
  * Ici on déclare un "préfixe" de route
@@ -36,21 +35,6 @@ class MovieController extends AbstractController
     {
         // Chargement du movieRepository a la construction de ce controller
         $this->repository = $movieRepository;
-    }
-
-    /**
-     * @Route(
-     *  "_index",
-     *  name="Index"
-     * )
-     */
-    public function index(): Response
-    {
-        return $this->render('movie/index.html.twig', 
-            [
-                'controller_name' => 'Rectorat',
-            ]
-        );
     }
 
     /**
@@ -371,6 +355,29 @@ class MovieController extends AbstractController
             'movie/edit.html.twig',
             [
                 'formulaire' => $formulaire->createView()
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *      "/search", 
+     *      methods="GET",
+     *      name="Search"
+     * )
+     */
+    public function search(Request $request): Response
+    {
+        $query = $request->query->get('q', '');
+
+        $movies = $this->repository->findBySearchQuery($query, 100);
+
+        // Renvoi en HTML
+        return $this->render(
+            'movie/list.html.twig',
+            [
+                'movies' => $movies,
+                'query' => $query
             ]
         );
     }

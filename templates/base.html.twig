@@ -21,16 +21,8 @@
     <body>
         <div class="container-fluid">
 
-            {% for messageSuccess in app.flashes('success') %}
-                <div class="alert alert-success" role="alert">
-                    {{ messageSuccess }}
-                </div>
-            {% endfor %}
-            {% for messageError in app.flashes('error') %}
-                <div class="alert alert-danger" role="alert">
-                    {{ messageError }}
-                </div>
-            {% endfor %}
+            {# Inclusion du fragment _flash_messages #}
+            {{ include('default/_flash_messages.html.twig') }}
 
             {% block body %}{% endblock %}
         </div>

@@ -25,3 +25,17 @@
 {% if (update is defined and update == true) %}
     <a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
 {% endif %}
+
+
+<form action="{{ path('Movie_Search') }}" method="get">
+    <div class="form-group">
+        <input name="q"
+                class="form-control search-field"
+                placeholder="Recherche..."
+                autocomplete="off"
+                value="{{ query|default('') }}"
+                autofocus
+                data-no-results-message="Aucuns résultats"
+        >
+    </div>
+</form>
