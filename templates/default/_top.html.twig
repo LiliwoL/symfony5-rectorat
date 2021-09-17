@@ -1,0 +1,14 @@
+<div class="fixed-top bg-primary">
+     {# Affichage de la locale en cours #}
+            Locale demandée: {{ app.request.locale }}
+
+            {{ app.environment }}
+            {% if (app.environment != "prod") %}
+                {#{ dump(app.environment) }#}
+        {% endif %}
+
+        {% if app.user %}
+            Bonjour {{ app.user.username }}
+            <br>
+        {% endif %}
+</div>

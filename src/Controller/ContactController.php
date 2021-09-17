@@ -3,19 +3,69 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactController extends AbstractController
 {
+    /**
+     * @Route(
+     *  "/", 
+     *  name="home"
+     * )
+     */
+    public function home() : Response
+    {
+        // Renvoi d'une réponse présentant un fichier twig
+        return $this->render(
+            'contact/index.html.twig',
+            [
+            ]
+        );
+    }
+
     /**
      * @Route(
      *  "/contact", 
      *  name="contact"
      * )
      */
-    public function index(): Response
+    public function contact(NotifierInterface $notifier): Response
     {
+
+        /*
+            Notification pour prévenir d'une nouvelle commande
+        */
+            // Création d'une notification avec un sujet et un canal            
+            $notification = new Notification('Nouvelle notification', ['email']);
+            // Le tableau de canal définit comment la notification va être distribuée
+            // ['email', 'sms']  enverrait à a fois par mail ET par SMS
+
+            // Ajout du contenu à la notification
+            $notification->content('Une nouvelle notification vous a été adressée');
+
+            // On peut aussi ajouter des emojis
+            $notification->emoji('�');
+
+            /*
+            Destinataire de la notification
+            */
+            // Création du destinataire
+            $recipient = new Recipient(
+                'destinataire@test.fr',
+                '0633111111'
+            );
+
+            /*
+		Envoi de la notification
+	*/
+		$notifier->send($notification, $recipient);
+
         // Renvoi d'une réponse présentant un fichier twig
         return $this->render(
             'contact/index.html.twig',
@@ -27,31 +77,23 @@ class ContactController extends AbstractController
 
     /**
      * @Route(
-     *  "/test",
-     *  name="test2",
-     *  priority=2
+     *     "/translate/{_locale}",
+     *     name="translate",
+     *     requirements={
+     *         "_locale": "en|fr|de",
+     *     }
      * )
      */
-    public function test2(): Response
+    public function translate(TranslatorInterface $translator, Request $request, string $_locale = 'fr')
     {
-        return new Response("Coucou2");
+        // Traduction à partir de la locale
+        //$translator->trans('Hello, this message need to be translated');
+
+        // Affichage de la locale depuis la requête
+        //dd($request->getLocale());
+
+        return $this->render(
+            'contact/translate.html.twig'
+        );
     }
-
-
-    /**
-     * @Route(
-     *  "/test/{name}/{id}",
-     *  name="test",
-     * 
-     *  requirements={
-     *      "name"="\D+",
-     *      "id"="\d"
-     *  }
-     * )
-     */
-    public function test(string $name = "defaut", int $id = 5): Response
-    {
-        return new Response("Coucou " . $name . " " . $id);
-    }
-
 }

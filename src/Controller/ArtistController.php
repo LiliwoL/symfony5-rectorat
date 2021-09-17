@@ -11,12 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/artist")
+ * @Route(
+ *      "/artist",
+ *      name="artist"
+ * )
  */
 class ArtistController extends AbstractController
 {
     /**
-     * @Route("/", name="artist_index", methods={"GET"})
+     * @Route("/", name="_index", methods={"GET"})
      */
     public function index(ArtistRepository $artistRepository): Response
     {
@@ -26,7 +29,7 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="artist_show", methods={"GET"})
+     * @Route("/{id}", name="_show", methods={"GET"})
      */
     public function show(Artist $artist): Response
     {
@@ -38,7 +41,7 @@ class ArtistController extends AbstractController
     // ********** Reservée aux ayants droits - Routes ADMIN
 
     /**
-     * @Route("/admin/new", name="artist_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -61,7 +64,7 @@ class ArtistController extends AbstractController
     }    
 
     /**
-     * @Route("/admin/{id}/edit", name="artist_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Artist $artist): Response
     {
@@ -81,7 +84,7 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}", name="artist_delete", methods={"POST"})
+     * @Route("/admin/{id}", name="_delete", methods={"POST"})
      */
     public function delete(Request $request, Artist $artist): Response
     {

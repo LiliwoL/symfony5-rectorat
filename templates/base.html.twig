@@ -16,30 +16,17 @@
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
-        <div class="container-fluid">
+        {# Inclusion de top #}
+        {% include 'default/_top.html.twig' %}
 
-            {# Affichage de la locale en cours #}
-            Locale demandée: {{ app.request.locale }}
+        {% include 'default/_navbar.html.twig' %}
 
-            {% for messageSuccess in app.flashes('success') %}
-                <div class="alert alert-success" role="alert">
-                    {{ messageSuccess }}
-                </div>
-            {% endfor %}
-            {% for messageError in app.flashes('error') %}
-                <div class="alert alert-danger" role="alert">
-                    {{ messageError }}
-                </div>
-            {% endfor %}
-
-            {{ app.environment }}
-            {% if (app.environment != "prod") %}
-                {#{ dump(app.environment) }#}
-            {% endif %}
-
+        <!-- Margin top -->
+        <div class="container-fluid mt-5">
             {% block body %}{% endblock %}
         </div>
     </body>
