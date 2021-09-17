@@ -60,7 +60,7 @@ class ClearLogsCommand extends Command
         $this->io = new SymfonyStyle($input, $output);
         $this->fs = new Filesystem();
 
-        // Pour un process        
+        // Pour un process
         $process = new Process(['figlet', 'Vidage du log']);
         $process->mustRun();
         $output->write($process->getOutput());
