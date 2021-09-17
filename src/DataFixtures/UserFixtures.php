@@ -25,7 +25,9 @@ class UserFixtures extends Fixture
         $this->_encoder = $encoder;
     }
 
-
+    /**
+     * Au chargement de cette fixture, on va créer 2 utilisateurs de base user et admin
+     */
     public function load(ObjectManager $manager)
     {
        //Nouvel instance d'utilisateur
@@ -66,5 +68,13 @@ class UserFixtures extends Fixture
 
         // Envoi de toutes les modifs à la base
         $manager->flush();
+    }
+
+    /**
+     * Il est possible de placer cette fixture au sein d'un groupe de Fixtures
+     */
+    public static function getGroups(): array
+    {
+        return ['users'];
     }
 }
