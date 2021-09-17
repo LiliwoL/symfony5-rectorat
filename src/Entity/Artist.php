@@ -46,6 +46,11 @@ class Artist
      */
     private $yearOfBirth;
 
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $Gender;
+
     public function __construct()
     {
         $this->moviesAsDirector = new ArrayCollection();
@@ -138,5 +143,17 @@ class Artist
     public function __toString()
     {
         return $this->getSurname() . " " . $this->getName() . " " . $this->getYearOfBirth();
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->Gender;
+    }
+
+    public function setGender(?string $Gender): self
+    {
+        $this->Gender = $Gender;
+
+        return $this;
     }
 }

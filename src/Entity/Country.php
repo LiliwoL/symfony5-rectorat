@@ -114,4 +114,10 @@ class Country
 
         return $this;
     }
+
+    // Permettra d'afficher le nom du pays
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
