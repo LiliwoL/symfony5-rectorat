@@ -121,6 +121,7 @@ class MovieController extends AbstractController
      */
     public function showMovie(?string $format, int $idMovie, SerializerInterface $serializerInterface) : Response
     {
+        
         // Cherche la fiche du film
         $movie = $this->repository->find($idMovie);
 

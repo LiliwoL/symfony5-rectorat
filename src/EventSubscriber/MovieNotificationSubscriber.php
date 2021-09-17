@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\MovieCreatedEvent;
+use App\Service\Slugifier;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Notifier\Notification\Notification;
