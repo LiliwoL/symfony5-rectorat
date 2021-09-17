@@ -32,6 +32,11 @@
                 </div>
             {% endfor %}
 
+            {{ app.environment }}
+            {% if (app.environment != "prod") %}
+                {#{ dump(app.environment) }#}
+            {% endif %}
+
             {% block body %}{% endblock %}
         </div>
     </body>
