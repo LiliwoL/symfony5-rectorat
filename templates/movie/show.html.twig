@@ -55,10 +55,21 @@
 
 
             {# SECURITE #}
+            {# **************** #}
+
+            {# Recours à Movie Voter #}
+            {% if is_granted('view', movie) %}
+                Accès autorisé car id 24 ou ROLE_ADMIN
+            {% else %}
+                Vous ne pouvez pas voir ceci
+            {% endif %}
+
             {# Bouton de modification uniquement aux admins #}
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
             {% endif %}
+
+            
         </div>
     </div>
 
