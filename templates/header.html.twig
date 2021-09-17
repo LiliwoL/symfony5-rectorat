@@ -2,6 +2,11 @@
 
 <h2>{{ valeur }}</h2>
 
+{% if app.user %}
+    Bonjour {{ app.user.username }}
+    <br>
+{% endif %}
+
 <a href="{{ path('Movie_Add') }}" title="ajouter un film" class="btn btn-primary">Ajouter un film</a>
 <a href="{{ path('Movie_List')}}" title="Liste des films" class="btn btn-primary">Liste des films</a>
 
@@ -22,6 +27,9 @@
 {% endif %}
 
 {# Affichage conditionnel en cas de valeur UPDATE définie ET à true #}
+{#
 {% if (update is defined and update == true) %}
-    <a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
+<a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
 {% endif %}
+
+#}

@@ -52,6 +52,13 @@
             {% if (movie.idDirector) %}
                 {{ movie.idDirector.name }} {{ movie.idDirector.surname }} {{ movie.idDirector.yearOfBirth }}
             {% endif %}
+
+
+            {# SECURITE #}
+            {# Bouton de modification uniquement aux admins #}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
+            {% endif %}
         </div>
     </div>
 
