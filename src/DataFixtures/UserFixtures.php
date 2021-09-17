@@ -28,7 +28,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        //Nouvel instance d'utilisateur
+       //Nouvel instance d'utilisateur
         $user = new User();
 
         // Utilisateur Simple
