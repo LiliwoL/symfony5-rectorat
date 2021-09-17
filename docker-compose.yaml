@@ -15,7 +15,6 @@ services:
             - dev
     phpmyadmin:
         image: phpmyadmin
-        container_name: phpmyadmin
         restart: always
         depends_on:
                 - database

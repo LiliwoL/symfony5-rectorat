@@ -21,6 +21,9 @@
     <body>
         <div class="container-fluid">
 
+            {# Affichage de la locale en cours #}
+            Locale demandée: {{ app.request.locale }}
+
             {% for messageSuccess in app.flashes('success') %}
                 <div class="alert alert-success" role="alert">
                     {{ messageSuccess }}
