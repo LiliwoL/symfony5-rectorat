@@ -55,7 +55,8 @@ class MovieNotificationSubscriber implements EventSubscriberInterface
         
         // Notification
         $notification = new Notification('Nouveau film ' . $movie->getTitle());
-        $notification->importance(Notification::IMPORTANCE_HIGH);
+        $notification->content('Content of notif');
+        $notification->importance(Notification::IMPORTANCE_URGENT);
 
         // Destinataire Notif
         $recipient = new Recipient('test@recipient.fr');
