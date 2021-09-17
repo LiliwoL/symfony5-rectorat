@@ -29,4 +29,3 @@ services:
     App\EventListener\FirstListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-

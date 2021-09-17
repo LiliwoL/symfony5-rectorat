@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Artist;
 use App\Entity\Movie;
+use App\Event\MovieCreatedEvent;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -181,7 +183,7 @@ class MovieController extends AbstractController
      *      methods={"POST"}
      * )
      */
-    public function addMoviePOST(Request $request, EntityManagerInterface $em) : Response
+    public function addMoviePOST(Request $request, EntityManagerInterface $em, EventDispatcherInterface $dispatcher) : Response
     {
         // Instance vide de MOVIE
         $movie = new Movie();
@@ -222,6 +224,14 @@ class MovieController extends AbstractController
                     'success',
                     'La fiche du film ' . $movie->getTitle() . " a bien été ajoutée!"
                 );
+
+            // ******* Dispatch de l'événement
+                // Création de notre événement personnalisé 
+                // en lui affectant le $movie qui vient d'être créé
+                $eventMovieCreated = new MovieCreatedEvent($movie);
+
+                // Dispatch de l'événement
+                $dispatcher->dispatch($eventMovieCreated, MovieCreatedEvent::NAME);
 
 
 
