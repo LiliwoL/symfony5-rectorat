@@ -25,34 +25,43 @@
     {#{ dump(movies) }#}
 
     <div class="row justify-content-md-center">
-        <div class="col-3">
-            <h1>{{ movie.title }} - {{ movie.year }}</h1>
 
-            {# En cas de poster absent, on place une fausse image #}
-            {% if (movie.poster == 'NULL') or (movie.poster == 'http://NULL') %}
-                {% set poster = 'https://dummyimage.com/150x200/000/fff' %}
-            {% else %}
-                {% set poster = movie.poster %}
-            {% endif %}
-            {# Echappement html pour l'attribut alt #}
-            <img src="{{ poster }}" class="img-thumbnail" alt="{{ movie.title|e }}">
+        
+           <div class="col-3">
+                <h1>{{ movie.title }} - {{ movie.year }}</h1>
 
-        </div>
+                {# En cas de poster absent, on place une fausse image #}
+                {% if (movie.poster == 'NULL') or (movie.poster == 'http://NULL') %}
+                    {% set poster = 'https://dummyimage.com/150x200/000/fff' %}
+                {% else %}
+                    {% set poster = movie.poster %}
+                {% endif %}
+                {# Echappement html pour l'attribut alt #}
+                <img src="{{ poster }}" class="img-thumbnail" alt="{{ movie.title|e }}">
 
-        <div class="col-4">
-            <h2>Synopsis</h2>
-            <div>
-                {{ movie.synopsis }}
             </div>
 
-            <hr>
+            <div class="col-4">
+                <h2>Synopsis</h2>
+                <div>
+                    {{ movie.synopsis }}
+                </div>
 
-            <h2>Réalisateur.rice:</h2>
-            {#{ dump(movie.idDirector) }#}
-            {% if (movie.idDirector) %}
-                {{ movie.idDirector.name }} {{ movie.idDirector.surname }} {{ movie.idDirector.yearOfBirth }}
-            {% endif %}
-        </div>
+                <hr>
+
+                <h2>Réalisateur.rice:</h2>
+
+                {# Utilisation d'un Voter simple pour vérifier le droit d'accès #}
+                {% if is_granted('view', movie) %}  
+                    {#{ dump(movie.idDirector) }#}
+                    {% if (movie.idDirector) %}
+                        {{ movie.idDirector.name }} {{ movie.idDirector.surname }} {{ movie.idDirector.yearOfBirth }}
+                    {% endif %}
+                {% else %}
+                    Vous ne pouvez pas voir le.a réalisateur.rice de ce film!
+                {% endif %}
+            </div>
+        
     </div>
 
 {% endblock %}
