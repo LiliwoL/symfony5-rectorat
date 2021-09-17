@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  * Ici on déclare un "préfixe" de route
  * @Route(
  *      "/movie",
- *      name="Movie_"
+ *      name="movie_"
  * )
  */
 class MovieController extends AbstractController
@@ -36,28 +36,13 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route(
-     *  "_index",
-     *  name="Index"
-     * )
-     */
-    public function index(): Response
-    {
-        return $this->render('movie/index.html.twig', 
-            [
-                'controller_name' => 'Rectorat',
-            ]
-        );
-    }
-
-    /**
      * Affichage de la liste des films
      * 
      * -> injection de la dépendance MovieRepository
      * 
      * @Route(
      *      "/list/{format?}",
-     *      name="List"
+     *      name="list"
      * )
      */
     public function list(?string $format) : Response
@@ -115,7 +100,7 @@ class MovieController extends AbstractController
      * 
      * @Route(
      *      "/{idMovie}/{format?}",
-     *      name="Show",
+     *      name="show",
      *      requirements={"idMovie"="\d+"}
      * )
      */
@@ -156,7 +141,7 @@ class MovieController extends AbstractController
     /**
      * @Route(
      *      "/add",
-     *      name="Add",
+     *      name="add",
      *      methods={"GET"}
      * )
      */
@@ -180,7 +165,7 @@ class MovieController extends AbstractController
      * 
      * @Route(
      *      "/add",
-     *      name="AddPOST",
+     *      name="addPOST",
      *      methods={"POST"}
      * )
      */
@@ -239,7 +224,7 @@ class MovieController extends AbstractController
             // ********* Redirection
                 // Inséré en base, donc on a l'id
                 return $this->redirectToRoute(
-                    "Movie_Show",
+                    "movie_show",
                     [
                         'idMovie' => $movie->getId()
                     ]
@@ -258,7 +243,7 @@ class MovieController extends AbstractController
 
             // ********* Redirection
             return $this->redirectToRoute(
-                "Movie_Add"
+                "movie_add"
             );
 
         }
@@ -267,7 +252,7 @@ class MovieController extends AbstractController
     /**
      * @Route(
      *      "/delete/{id}",
-     *      name="Delete",
+     *      name="delete",
      *      methods={ "POST" }
      * )
      */
@@ -313,14 +298,14 @@ class MovieController extends AbstractController
                 );            
         }
 
-        return $this->redirectToRoute('Movie_List');
+        return $this->redirectToRoute('movie_list');
     }
 
 
     /**
      * @Route(
      *      "/edit/{id}",
-     *      name="Edit",
+     *      name="edit",
      *      methods={"GET", "POST"}
      * )
      * 
@@ -354,7 +339,7 @@ class MovieController extends AbstractController
                     'Le film ' . $movie->getTitle() . ' a bien été mis à jour'
                 );
 
-            return $this->redirectToRoute('Movie_List');
+            return $this->redirectToRoute('movie_list');
         }
 
         //Affichage du formulaire avec les données du Movie en cours
@@ -362,6 +347,29 @@ class MovieController extends AbstractController
             'movie/edit.html.twig',
             [
                 'formulaire' => $formulaire->createView()
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *      "/search", 
+     *      methods="GET",
+     *      name="search"
+     * )
+     */
+    public function search(Request $request): Response
+    {
+        $query = $request->query->get('q', '');
+
+        $movies = $this->repository->findBySearchQuery($query, 100);
+
+        // Renvoi en HTML
+        return $this->render(
+            'movie/list.html.twig',
+            [
+                'movies' => $movies,
+                'query' => $query
             ]
         );
     }

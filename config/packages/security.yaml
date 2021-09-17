@@ -29,7 +29,7 @@ security:
                 path: app_logout
 
                 # Redirection APRES le logout
-                target: Movie_List
+                target: movie_list
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

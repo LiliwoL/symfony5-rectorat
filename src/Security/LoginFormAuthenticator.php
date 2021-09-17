@@ -51,7 +51,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // Redirection en cas de login réussi
-        return new RedirectResponse($this->urlGenerator->generate('Movie_List'));
+        return new RedirectResponse($this->urlGenerator->generate('movie_list'));
 
         // si non défini on génère une Exception de toute non définie
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);

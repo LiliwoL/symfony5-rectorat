@@ -1,18 +1,13 @@
-<h1>LOGO</h1>
-
 <h2>{{ valeur }}</h2>
 
-{% if app.user %}
-    Bonjour {{ app.user.username }}
-    <br>
-{% endif %}
 
-<a href="{{ path('Movie_Add') }}" title="ajouter un film" class="btn btn-primary">Ajouter un film</a>
-<a href="{{ path('Movie_List')}}" title="Liste des films" class="btn btn-primary">Liste des films</a>
+
+<a href="{{ path('movie_add') }}" title="ajouter un film" class="btn btn-primary">Ajouter un film</a>
+<a href="{{ path('movie_list')}}" title="Liste des films" class="btn btn-primary">Liste des films</a>
 
 
 {# Affichage conditionnel en cas de valeur DELETE définie ET à true #}
-{# Ce formulaire ne s'afficher que sur les pages Movie_Show #}
+{# Ce formulaire ne s'afficher que sur les pages movie_show #}
 {# Il permettra la suppression du film en cours #}
 {% if (delete is defined and delete == true) %}
     <form 
