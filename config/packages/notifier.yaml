@@ -9,7 +9,7 @@ framework:
         #    nexmo: '%env(NEXMO_DSN)%'
         channel_policy:
             # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
-            urgent: ['chat']
+            urgent: ['chat/discord', 'email']
             high: ['email']
             medium: ['email']
             low: ['email']
