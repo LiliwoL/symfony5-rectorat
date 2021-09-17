@@ -18,7 +18,7 @@ class ClearLogsCommand extends Command
      * @var SymfonyStyle
      */
     private $io;
-    
+
     /**
      * @var Filesystem
      */
@@ -35,7 +35,9 @@ class ClearLogsCommand extends Command
     public function __construct(ContainerBagInterface $params)
     {
         parent::__construct();
-        $this->logsDir = $params->get('app.dev_log');
+
+        // Récupération des paramètres définis dans services.yaml
+        $this->logsDir = $params->get('app.log_dir');
         $this->env = $params->get('app.env');
     }
 
