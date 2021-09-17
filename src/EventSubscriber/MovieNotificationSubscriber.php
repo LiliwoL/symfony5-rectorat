@@ -63,5 +63,9 @@ class MovieNotificationSubscriber implements EventSubscriberInterface
 
         // Appel du composant Notifier        
         $this->_notifier->send($notification, $recipient);
+
+        // Arret de la propagation de cet événement
+        $event->stopPropagation();
+        // Ainsi tous les Listeners ou Subscribers de cet événement qui n'ont pas encore été appelés, ne seront PAS appelés!
     }
 }
