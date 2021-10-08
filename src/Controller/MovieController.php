@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Ici on déclare un "préfixe" de route
@@ -372,5 +373,45 @@ class MovieController extends AbstractController
                 'query' => $query
             ]
         );
+    }
+
+    /**
+     * Injection de HTTP Client Interface
+     * https://symfony.com/doc/current/http_client.html
+     * 
+     * @Route(
+     *      "/query/tmdb/{query}", 
+     *      methods="GET",
+     *      name="query_tmdb"
+     * )
+     */
+    public function TVDBAPISearch(HttpClientInterface $client, string $query)
+    {
+        $apiKey = '5eeb6dc76230d81a64b74482e6c3b7f6';
+
+        $response = $client->request(
+            'GET',
+            'https://api.themoviedb.org/3/search/movie?api_key=' . $apiKey . '&language=fr-FR&query=' . $query . '&page=1&include_adult=false'
+        );
+
+        $statusCode = $response->getStatusCode();
+        // $statusCode = 200
+        $contentType = $response->getHeaders()['content-type'][0];
+        // $contentType = 'application/json'
+        $content = $response->getContent();
+        // $content = '{"id":521583, "name":"symfony-docs", ...}'
+        $content = $response->toArray();
+        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+
+        //return $this->json($content['results']);
+
+        // Renvoi en HTML
+        return $this->render(
+            'movie/partials/_tmdb_results.html.twig',
+            [
+                'results' => $content['results']
+            ]
+        );
+
     }
 }

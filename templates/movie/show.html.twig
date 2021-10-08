@@ -34,6 +34,7 @@
             {% else %}
                 {% set poster = movie.poster %}
             {% endif %}
+
             {# Echappement html pour l'attribut alt #}
             <img src="{{ poster }}" class="img-thumbnail" alt="{{ movie.title|e }}">
 
@@ -66,10 +67,17 @@
 
             {# Bouton de modification uniquement aux admins #}
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('Movie_Edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
+                <a href="{{ path('movie_edit', {'id': movie.id})}}" title="Modifier ce film" class="btn btn-primary">Modifier ce film</a>
             {% endif %}
 
-            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3>Résultats sur TMDB API</h3>            
+            {# Requête sur TMDB #}
+            {{ render(path('movie_query_tmdb', { query: movie.title })) }}
         </div>
     </div>
 

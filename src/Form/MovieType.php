@@ -103,9 +103,14 @@ class MovieType extends AbstractType
                         return $artist;
                     },
                     // Lien vers la doc https://symfony.com/doc/current/reference/forms/types/entity.html#query-builder                    
-                    'query_builder' => function (ArtistRepository $artistRepository){
+                    /*'query_builder' => function (ArtistRepository $artistRepository){
                         return $artistRepository->findArtistBornAfter1980();
-                    }
+                    }*/
+                    // Query Builder pour ordonner
+                    'query_builder' => function (ArtistRepository $artistRepository) {
+                        return $artistRepository->createQueryBuilder('a')
+                            ->orderBy('a.name', 'ASC');
+                    },
                 ]
             )
             ->add(

@@ -19,7 +19,7 @@ class FirstListener
     public function onKernelRequest(RequestEvent $event)
     {
         // Ajouter dans le log des infos
-        $this->logger->info("**** Evenement Kernel Request");
+        $this->logger->info("❤❤❤ Evenement Kernel Request");
         $this->logger->debug( "Type: " . $event->getRequestType() );
     }
 }
