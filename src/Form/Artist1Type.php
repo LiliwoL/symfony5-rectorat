@@ -16,7 +16,7 @@ class Artist1Type extends AbstractType
             ->add('surname')
             ->add('yearOfBirth')
             ->add('Gender')
-            ->add('country')
+            ->add('codeCountry')
         ;
     }
 

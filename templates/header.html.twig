@@ -12,10 +12,10 @@
 {% if (delete is defined and delete == true) %}
     <form 
         method="post" 
-        action="{{ path('Movie_Delete', {'id': movie.id}) }}"
+        action="{{ path('Movie_Delete', {'id': movie.idMovie}) }}"
         onsubmit="return confirm('Êtes vous sûr.e de vouloir supprimer ce film?');">
 
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movie.id) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movie.idMovie) }}">
         <button class="btn btn-danger">Supprimer (CSRF Validation)</button>
 
     </form>

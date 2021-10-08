@@ -2,59 +2,59 @@
 
 namespace App\Entity;
 
-use App\Repository\ArtistRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArtistRepository;
 
 /**
+ * Artist
+ *
+ * @ORM\Table(name="Artist")
  * @ORM\Entity(repositoryClass=ArtistRepository::class)
- * @ORM\Table(name="artist")
  */
 class Artist
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=30, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="surname", type="string", length=30, nullable=false)
      */
     private $surname;
 
     /**
-     * @ORM\OneToMany(targetEntity=Movie::class, mappedBy="idDirector")
-     */
-    private $moviesAsDirector;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="artists")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @var int|null
+     *
+     * @ORM\Column(name="yearOfBirth", type="integer", nullable=true)
      */
     private $yearOfBirth;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $Gender;
 
-    public function __construct()
-    {
-        $this->moviesAsDirector = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=Country::class)
+     * @ORM\JoinColumn(name="codeCountry", referencedColumnName="code")
+     */
+    private $codeCountry;
 
     public function getId(): ?int
     {
@@ -85,6 +85,48 @@ class Artist
         return $this;
     }
 
+    public function getYearOfBirth(): ?int
+    {
+        return $this->yearOfBirth;
+    }
+
+    public function setYearOfBirth(?int $yearOfBirth): self
+    {
+        $this->yearOfBirth = $yearOfBirth;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->Gender;
+    }
+
+    public function setGender(?string $Gender): self
+    {
+        $this->Gender = $Gender;
+
+        return $this;
+    }
+
+    // **** Fonction d'affichage    
+    public function __toString()
+    {
+        return $this->getSurname() . " " . $this->getName() . " " . $this->getYearOfBirth();
+    }
+
+    public function getCodeCountry(): ?Country
+    {
+        return $this->codeCountry;
+    }
+
+    public function setCodeCountry(?Country $codeCountry): self
+    {
+        $this->codeCountry = $codeCountry;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Movie[]
      */
@@ -111,48 +153,6 @@ class Artist
                 $moviesAsDirector->setIdDirector(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCountry(): ?Country
-    {
-        return $this->country;
-    }
-
-    public function setCountry(?Country $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getYearOfBirth(): ?int
-    {
-        return $this->yearOfBirth;
-    }
-
-    public function setYearOfBirth(?int $yearOfBirth): self
-    {
-        $this->yearOfBirth = $yearOfBirth;
-
-        return $this;
-    }
-
-    // **** Fonction d'affichage    
-    public function __toString()
-    {
-        return $this->getSurname() . " " . $this->getName() . " " . $this->getYearOfBirth();
-    }
-
-    public function getGender(): ?string
-    {
-        return $this->Gender;
-    }
-
-    public function setGender(?string $Gender): self
-    {
-        $this->Gender = $Gender;
 
         return $this;
     }
