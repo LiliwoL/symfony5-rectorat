@@ -6,6 +6,7 @@
 parameters:
     app.env: '%env(APP_ENV)%'
     app.log_dir: 'var/log/'
+    app.tmdb_ami_key: '%env(TMDB_API_KEY)%'
 
 services:
     # default configuration for services in *this* file

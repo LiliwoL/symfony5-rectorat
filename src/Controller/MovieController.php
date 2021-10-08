@@ -387,7 +387,8 @@ class MovieController extends AbstractController
      */
     public function TVDBAPISearch(HttpClientInterface $client, string $query)
     {
-        $apiKey = '5eeb6dc76230d81a64b74482e6c3b7f6';
+        // Api Key stored in .env.local
+        $apiKey = $this->getParameter('app.tmdb_ami_key');
 
         $response = $client->request(
             'GET',
