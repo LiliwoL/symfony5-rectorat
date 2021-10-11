@@ -42,6 +42,10 @@
             <li><a class="dropdown-item" href="{{ path('artist_index')}}" title="Liste des artistes">{% trans %}List{% endtrans %}</a></li>
           </ul>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('sitemap') }}">{% trans %}Sitemap{% endtrans %}</a>
+        </li>
         
       </ul>
       <form class="d-flex" action="{{ path('movie_search') }}">

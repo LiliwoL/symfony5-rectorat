@@ -29,17 +29,5 @@
         <div class="container-fluid" style="margin-top:80px">
             {% block body %}{% endblock %}
         </div>
-
-
-        <div>
-            <p>Sitemap</p>
-            {# route_paths fait appel directement au Helper définit dans twig.yaml #}
-            {# on peut alors faire appel à ses méthodes qui commencent par get... comme getRoutes() en faisant route.paths.routes #}
-            {% for route_name, route_path in route_paths.routes %}
-                {# {{ dump(route_name, route_path) }} #}
-                <a href="{{route_path}}" alt="Route vers: {{route_name}}">{{route_name}}</a>
-                <br>
-            {% endfor %}
-        </div>
     </body>
 </html>
