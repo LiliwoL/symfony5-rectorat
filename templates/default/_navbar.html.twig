@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mt-4 fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-        <img src="https://static.thenounproject.com/png/4240884-200.png" height="30" width="30">
+        <img src="{{ asset('img/logo.png') }}" height="30" width="30">
     </a>
 
 
@@ -52,8 +52,8 @@
         
       </ul>
       <form class="d-flex" action="{{ path('movie_search') }}">
-        <input class="form-control me-2" value="{{ query|default('') }}" type="search" placeholder="Recherche..." aria-label="Search" name="q">
-        <button class="btn btn-outline-success" type="submit">Rechercher</button>
+        <input class="form-control me-2" value="{{ query|default('') }}" type="search" placeholder="{{ 'Query'|trans }}" aria-label="Search" name="q">
+        <button class="btn btn-outline-success" type="submit">{{ 'Search'|trans }}</button>
       </form>
     </div>
   </div>
