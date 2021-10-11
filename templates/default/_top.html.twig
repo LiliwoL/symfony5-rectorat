@@ -1,6 +1,6 @@
 <div class="fixed-top bg-primary">
      {# Affichage de la locale en cours #}
-            Locale demandée: {{ app.request.locale }}
+            Locale demandée: <span class="flag flag-{{ app.request.locale }}"> </span>
 
             {{ app.environment }}
             {% if (app.environment != "prod") %}

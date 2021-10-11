@@ -74,26 +74,4 @@ class ContactController extends AbstractController
             ]
         );
     }
-
-    /**
-     * @Route(
-     *     "/translate/{_locale}",
-     *     name="translate",
-     *     requirements={
-     *         "_locale": "en|fr|de",
-     *     }
-     * )
-     */
-    public function translate(TranslatorInterface $translator, Request $request, string $_locale = 'fr')
-    {
-        // Traduction à partir de la locale
-        //$translator->trans('Hello, this message need to be translated');
-
-        // Affichage de la locale depuis la requête
-        //dd($request->getLocale());
-
-        return $this->render(
-            'contact/translate.html.twig'
-        );
-    }
 }

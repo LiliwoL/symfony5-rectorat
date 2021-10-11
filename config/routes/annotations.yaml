@@ -1,6 +1,18 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
+    prefix: 
+        # La locale est obligatoire dans la route
+        #/{_locale}
+
+        # Ci dessous, on peut définir manuellement un préfixe pour les locales
+        fr: ''
+        gb: '/gb'
+        de: '/de'
+    requirements:
+        _locale: '%app.supported_locales%'
+    defaults:
+        _locale: '%app.default_locale%'
 
 kernel:
     resource: ../../src/Kernel.php

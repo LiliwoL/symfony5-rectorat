@@ -1,0 +1,23 @@
+{# Récupération de la route en cours #}
+{% set route = app.request.attributes.get('_route') %}
+
+{# Récupération des paramètres de la route en cours #}
+{% set route_params = app.request.attributes.get('_route_params') %}
+{% set params = route_params|merge(app.request.query.all) %}
+
+{% set applocales = supported_locales|split('|') %}
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="localeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="flag flag-{{ app.request.locale }}"> </span>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="localeDropdown">
+        {% for locale in applocales %}
+            {% if locale != app.request.locale %}
+                <a class="dropdown-item" href="{{ path(route, params|merge({ _locale: locale })) }}">
+                    <span class="flag flag-{{ locale }}"> </span>  {{ locale }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</li>

@@ -4,6 +4,9 @@ twig:
     globals:
         route_paths: '@App\Helper\Routes'
 
+        # Locale
+        default_locale: '%app.default_locale%'
+        supported_locales: '%app.supported_locales%'
 
 when@test:
     twig:
