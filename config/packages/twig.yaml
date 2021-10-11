@@ -1,6 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
 
+    globals:
+        route_paths: '@App\Helper\Routes'
+
+
 when@test:
     twig:
         strict_variables: true
